@@ -8,10 +8,36 @@ public class Run {
 		
 		Scanner sc = new Scanner(System.in);
 		
-		Human gildong = new Human("choi",21,"123456-456789",'m');
-		Book[] gildongBookList = gildong.getBookList();
-		gildongBookList[0] = new Book("꿈꾸는 다락방");
-		String gildongName = gildong.getName();
+		Library lb = new Library();
+//		lb.createHuman();
+//		lb.createBook();
+		lb.mainMenu();
+		//library 객체 안에 createBook 메서드를 작성해보세요.
+		
+		
+//		String name, residentNumber;
+//		int age;
+//		char gender;
+//		
+////		이름, 나이, 주민등록번호, 성별을 입력받아 사람객체 한개를 생성한다.
+//		System.out.print("이름을 입력하세요 : ");
+//		name = sc.nextLine();
+//		System.out.print("나이를 입력하세요 : ");
+//		age = sc.nextInt();
+//		sc.nextLine();
+//		System.out.print("주민등록번호 앞 6자리를 입력하세요 : ");
+//		residentNumber = sc.nextLine();
+//		System.out.print("성별을 입력해주세요.(남 : M, 여자는 : F) : ");
+//		gender = sc.next().toUpperCase().charAt(0);
+//		
+//		Human gildong = new Human(name,age,residentNumber,gender);
+//		System.out.println(gildong.toString());
+		
+		
+//		Human gildong = new Human("choi",21,"123456-456789",'m');
+//		Book[] gildongBookList = gildong.getBookList();
+////		gildongBookList[0] = new Book("꿈꾸는 다락방");
+//		String gildongName = gildong.getName();
 		
 //		Human[] arr = new Human[10];
 //		ArrayList<Human> list = new ArrayList<>();
