@@ -6,7 +6,7 @@ public class TriangleController {
 	
 	public double calcArea(double height, double width) {
 		s = new Shape(3, height, width, "white");
-		return s.getWidth() * s.getHeight();
+		return s.getWidth() * s.getHeight() / 2;
 		
 	}
 	

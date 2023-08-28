@@ -134,7 +134,7 @@ public class Library {
 		System.out.print("성별을 입력해주세요.(남 : M, 여자는 : F) : ");
 		gender = sc.next().toUpperCase().charAt(0);
 		
-		Human human = new Human(name,key,age,residentNumber,gender);
+		Human human = new Human(key,name,age,residentNumber,gender);
 		System.out.println(human.toString() + "생성완료");
 		
 		return human;
