@@ -7,6 +7,7 @@ public class Human {
 	private int age;
 	private String residentNumber;
 	private char gender; 
+	private int rentBookCode;
 //	private Book[] bookList;
 	
 	//필드를 전부 초기화하는 매개변수를 가지고 있는 생성자
@@ -23,6 +24,7 @@ public class Human {
 		this.residentNumber = residentNumber;
 		this.gender = gender;
 		this.key = key;
+		this.rentBookCode = 0;
 //		bookList = new Book[10];
 	}
 	
@@ -31,6 +33,9 @@ public class Human {
 //		return this.bookList;
 //	}
 	
+	public int getRentBookCode() {
+		return rentBookCode;
+	}
 	
 	public String getName() {
 		return name;
@@ -71,10 +76,17 @@ public class Human {
 	public void setKey(int key) {
 		this.key = key;
 	}
+	
+	public void setRentBookCode(int rentBookCode) {
+		this.rentBookCode = rentBookCode;
+	}
 
 	@Override
 	public String toString() {
-		return this.key + "\t" + this.name + "\t" + this.age + "\t" + this.residentNumber + "\t" + this.gender;
+		return this.key + "\t" + this.name + "\t" + this.age + "\t" + this.residentNumber + "\t" + 
+	this.gender + "\t" + (this.rentBookCode == 0 ? "도서 대여 가능" : (this.rentBookCode + "번 대여중"));
+		
+		
 	}
 	
 	public String getyearAge() {
