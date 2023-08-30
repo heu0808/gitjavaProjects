@@ -88,8 +88,4 @@ public class Human {
 		
 		
 	}
-	
-	public String getyearAge() {
-		return "제 10년 후 나이는 " + this.age + "살입니다.";
-	}
 }
