@@ -42,16 +42,20 @@ public class Library {
 			sc.nextLine();
 			switch(number) {
 			case 1 :
+				//도서등록
 				printBookList(bookList);
 				bookList.add(this.createBook());
 				break;
 			case 2 :
+				//도서대여
 				rentBook();
 				break;
 			case 3 :
+				//도서반납
 				returnBook();
 				break;
 			case 4 : 
+				//회원등록
 				printHumanList(humanList);
 				humanList.add(this.createHuman());
 				break;
@@ -80,9 +84,23 @@ public class Library {
 		}
 		//tmpHumanList 담긴 사람들을 보여준다.
 		printHumanList(tmpHumanList);
-		
+		Human selectHuman = null;
+		while(selectHuman == null) {
 		// 리스트에 있는 사람중 어떤 사람의 책을 반납할지 id를 입력받는다.
+		System.out.println("어떤 사람의 책을 반납하시겠습니까? (id입력) : ");
+		int selectID = sc.nextInt();
 		// 해당 사람을 selectHuman이라는 변수를 만들어 담아준다.
+	
+		for(Human man : tmpHumanList) {
+			if(man.getKey() == selectID) {
+				selectHuman = man;
+			}
+		}
+		if(selectHuman == null) {
+			System.out.println("입력하신 id와 일치하는 회원이 없습니다.");
+		}
+	}
+//		selectHuman <-빌린사람, 반납할 사람 -> 반납할 책의 코드를 가지고 있겠네
 		// 해당 사람이 빌린 책을 rentBookCode를 이용해서 bookList에서 찾아준다.
 		// 해당 책을 selectBook이라는 변수를 만들어 담아준다.
 		
@@ -93,8 +111,8 @@ public class Library {
 	//도서 대여를 위한 메서드
 	public void rentBook() {
 		//대여가능한 책이 있는지 검사
-		boolean isBookCheck = false; // 북을 빌릴 수 있는지 검사 결과값
-		boolean isHumanCheck = false; //북을 빌릴 수 있는 사람이 있는지 검사 결과값
+		boolean isBookCheck = false; // true면 책이 하나라도 대여가능상태 false ->책을 하나도 빌릴 수 없는 상태
+		boolean isHumanCheck = false; //true면 책을 빌릴 수 있는 사람이 한명이라도 있다. false -> 책을 빌릴 수 있는 사람이 한명도 없다.
 		for(Book b : bookList) {
 			if(b.getIsRent()) {
 				isBookCheck = true;
@@ -111,10 +129,10 @@ public class Library {
 		//없으면 없다고하고 리턴
 		//대여를 할 수 있는 회원이 있는지 검사
 		//없으면 없다고하고 리턴
-		if(bookList.size() == 0 || !isBookCheck) {
+		if(bookList.size() == 0 || !isBookCheck) { //책 자체가 없거나 또는 빌릴 수 있는 책이 하나도 없다 
 			System.out.println("도서등록이 필요합니다.");
 			return;
-		} else if(humanList.size() == 0 || !isHumanCheck) {
+		} else if(humanList.size() == 0 || !isHumanCheck) { //책을 빌릴 사람이 아예 없거나 또는 책을 빌릴 수 있는 사람이 한명도 없다.
 			System.out.println("회원등록이 필요합니다.");
 			return;
 		}
@@ -161,7 +179,7 @@ public class Library {
 	//human을 선택해서 반환해주는 메서드
 	public Human selectHuman() {
 		Human selectHuman = null;
-		while(selectHuman == null) {
+		while(selectHuman == null) { //selectHuman에 어떤 값이 들어올때까지 반복이구나
 			printHumanList(humanList);
 			System.out.print("어떤 회원으로 대여하시겠습니까?(id입력) : ");
 			int selectKey = sc.nextInt();

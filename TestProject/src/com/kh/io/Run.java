@@ -9,8 +9,6 @@ public class Run {
 		Scanner sc = new Scanner(System.in);
 		
 		Library lb = new Library();
-//		lb.createHuman();
-//		lb.createBook();
 		lb.mainMenu();
 		//library 객체 안에 createBook 메서드를 작성해보세요.
 		
