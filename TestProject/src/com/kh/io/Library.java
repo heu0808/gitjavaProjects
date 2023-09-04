@@ -32,7 +32,8 @@ public class Library {
 			System.out.println("1.도서등록");
 			System.out.println("2.도서대여");
 			System.out.println("3.도서반납");
-			System.out.println("4.회원등록");
+			System.out.println("4.도서삭제");
+			System.out.println("5.회원등록");
 			System.out.println("9.프로그램 종료");
 			System.out.println("==========================");
 			System.out.println("원하시는 서비스 번호를 입력하세요 : ");
@@ -54,7 +55,11 @@ public class Library {
 				//도서반납
 				returnBook();
 				break;
-			case 4 : 
+			case 4 :
+				//도서삭제
+				deletebook();
+				break;
+			case 5 : 
 				//회원등록
 				printHumanList(humanList);
 				humanList.add(this.createHuman());
@@ -67,47 +72,28 @@ public class Library {
 			}
 		}
 }
-	//도서를 반납하기위한 메서드
-	public void returnBook() {
-		// 책을 빌린사람들을 추린다.
-		ArrayList<Human> tmpHumanList = new ArrayList<>();
-		//humanList -> 전체검사하면서 책을 대여한 사람만 tmpHumanList 추가
-		for(Human h : humanList) {
-			if(h.getRentBookCode() != 0) {
-				tmpHumanList.add(h);
-			}
-		}
-		
-		if(tmpHumanList.size() == 0) {
-			System.out.println("반납할 책이 없습니다.");
-			return;
-		}
-		//tmpHumanList 담긴 사람들을 보여준다.
-		printHumanList(tmpHumanList);
-		Human selectHuman = null;
-		while(selectHuman == null) {
-		// 리스트에 있는 사람중 어떤 사람의 책을 반납할지 id를 입력받는다.
-		System.out.println("어떤 사람의 책을 반납하시겠습니까? (id입력) : ");
-		int selectID = sc.nextInt();
-		// 해당 사람을 selectHuman이라는 변수를 만들어 담아준다.
 	
-		for(Human man : tmpHumanList) {
-			if(man.getKey() == selectID) {
-				selectHuman = man;
-			}
-		}
-		if(selectHuman == null) {
-			System.out.println("입력하신 id와 일치하는 회원이 없습니다.");
-		}
-	}
-//		selectHuman <-빌린사람, 반납할 사람 -> 반납할 책의 코드를 가지고 있겠네
-		// 해당 사람이 빌린 책을 rentBookCode를 이용해서 bookList에서 찾아준다.
-		// 해당 책을 selectBook이라는 변수를 만들어 담아준다.
+//	사용자에 입력에 따라 책객체를 생성해서 반환한다.
+//	도서등록
+	public Book createBook() {
 		
-		//selectHuman의 rentBookCode를 0으로 변경
-		//selectBook의 isRent를 true로 변경
-		//반납이 완료되었습니다. 출력
+		String title, author;
+		int code;
+		
+		System.out.print("책 제목을 입력하세요 : ");
+		title = sc.nextLine();
+		System.out.print("작가 이름을 입력하세요 : ");
+		author = sc.nextLine();
+		System.out.print("코드를 입력하세요 : ");
+		code = sc.nextInt();
+		sc.nextLine();
+		
+		Book book = new Book(title,author,code);
+		System.out.println(book.toString() + "생성완료");
+		
+		return book;
 	}
+	
 	//도서 대여를 위한 메서드
 	public void rentBook() {
 		//대여가능한 책이 있는지 검사
@@ -149,6 +135,98 @@ public class Library {
 		selectHuman.setRentBookCode(selectBook.getCode());
 		selectBook.setIsRent(false);
 	}
+	
+	//도서를 반납하기위한 메서드
+	public void returnBook() {
+		// 책을 빌린사람들을 추린다.
+		ArrayList<Human> tmpHumanList = new ArrayList<>();
+		//humanList -> 전체검사하면서 책을 대여한 사람만 tmpHumanList 추가
+		for(Human h : humanList) {
+			if(h.getRentBookCode() != 0) {
+				tmpHumanList.add(h);
+			}
+		}
+		
+		if(tmpHumanList.size() == 0) {
+			System.out.println("반납할 책이 없습니다.");
+			return;
+		}
+		//tmpHumanList 담긴 사람들을 보여준다.
+		printHumanList(tmpHumanList);
+		Human selectHuman = null;
+		while(selectHuman == null) {
+		// 리스트에 있는 사람중 어떤 사람의 책을 반납할지 id를 입력받는다.
+		System.out.println("어떤 사람의 책을 반납하시겠습니까? (id입력) : ");
+		int selectID = sc.nextInt();
+		// 해당 사람을 selectHuman이라는 변수를 만들어 담아준다.
+	
+		for(Human man : tmpHumanList) {
+			if(man.getKey() == selectID) {
+				selectHuman = man;
+			}
+		}
+		if(selectHuman == null) {
+			System.out.println("입력하신 id와 일치하는 회원이 없습니다.");
+		}
+		//selectHuman의 rentBookCode를 0으로 변경
+		//selectBook의 isRent를 true로 변경
+		//반납이 완료되었습니다. 출력
+		for(Book book : bookList) {
+			if(book.getCode() == selectHuman.getRentBookCode()) { 
+				book.setIsRent(true);
+				selectHuman.setRentBookCode(0);
+				System.out.println("반납이 완료되었습니다.");
+				break;
+			}
+		}
+	}
+//		selectHuman <-빌린사람, 반납할 사람 -> 반납할 책의 코드를 가지고 있겠네
+		// 해당 사람이 빌린 책을 rentBookCode를 이용해서 bookList에서 찾아준다.
+		// 해당 책을 selectBook이라는 변수를 만들어 담아준다.
+		
+	}
+	
+	//도서를 삭제하기 위한 메서드
+	public void deletebook() {
+		//도서목록을 보여준다.
+		ArrayList<Book> tmpBookList = new ArrayList<>();
+		for(Book b : bookList) {
+			
+		}
+		//삭제할 도서코드를 입력받는다.
+		//해당도서가 대여중이면 "대여중인 도서는 삭제가 불가합니다"하고 return;
+		//해당도서가 대여중이 아니면 도서목록에서 해당도서 삭제
+	}
+	
+//	사용자에 입력에 따라 사람객체를 생성해서 반환한다.
+	public Human createHuman() {
+		
+		String name, residentNumber;
+		int age, key;
+		char gender;
+		
+//		이름, 나이, 주민등록번호, 성별을 입력받아 사람객체 한개를 생성한다.
+		
+		System.out.print("이름을 입력하세요 : ");
+		name = sc.nextLine();
+		System.out.print("고객 고유코드를 입력하세요. : ");
+		key = sc.nextInt();
+		System.out.print("나이를 입력하세요 : ");
+		age = sc.nextInt();
+		sc.nextLine();
+		System.out.print("주민등록번호 앞 6자리를 입력하세요 : ");
+		residentNumber = sc.nextLine();
+		System.out.print("성별을 입력해주세요.(남 : M, 여자는 : F) : ");
+		gender = sc.next().toUpperCase().charAt(0);
+		
+		Human human = new Human(key,name,age,residentNumber,gender);
+		System.out.println(human.toString() + "생성완료");
+		
+		return human;
+		
+		
+	}
+
 	
 	//book을 선택해서 반환해주는 메서드
 	public Book selectBook() {
@@ -227,54 +305,4 @@ public class Library {
 		}
 		System.out.println("---------------------------");
 	}
-	
-//	사용자에 입력에 따라 사람객체를 생성해서 반환한다.
-	public Human createHuman() {
-		
-		String name, residentNumber;
-		int age, key;
-		char gender;
-		
-//		이름, 나이, 주민등록번호, 성별을 입력받아 사람객체 한개를 생성한다.
-		
-		System.out.print("이름을 입력하세요 : ");
-		name = sc.nextLine();
-		System.out.print("고객 고유코드를 입력하세요. : ");
-		key = sc.nextInt();
-		System.out.print("나이를 입력하세요 : ");
-		age = sc.nextInt();
-		sc.nextLine();
-		System.out.print("주민등록번호 앞 6자리를 입력하세요 : ");
-		residentNumber = sc.nextLine();
-		System.out.print("성별을 입력해주세요.(남 : M, 여자는 : F) : ");
-		gender = sc.next().toUpperCase().charAt(0);
-		
-		Human human = new Human(key,name,age,residentNumber,gender);
-		System.out.println(human.toString() + "생성완료");
-		
-		return human;
-		
-		
-	}
-	
-//	사용자에 입력에 따라 책객체를 생성해서 반환한다.
-	public Book createBook() {
-		
-		String title, author;
-		int code;
-		
-		System.out.print("책 제목을 입력하세요 : ");
-		title = sc.nextLine();
-		System.out.print("작가 이름을 입력하세요 : ");
-		author = sc.nextLine();
-		System.out.print("코드를 입력하세요 : ");
-		code = sc.nextInt();
-		sc.nextLine();
-		
-		Book book = new Book(title,author,code);
-		System.out.println(book.toString() + "생성완료");
-		
-		return book;
-	}
-	
 }
