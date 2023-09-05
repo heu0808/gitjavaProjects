@@ -189,10 +189,7 @@ public class Library {
 	//도서를 삭제하기 위한 메서드
 	public void deletebook() {
 		//도서목록을 보여준다.
-		ArrayList<Book> tmpBookList = new ArrayList<>();
-		for(Book b : bookList) {
-			
-		}
+		
 		//삭제할 도서코드를 입력받는다.
 		//해당도서가 대여중이면 "대여중인 도서는 삭제가 불가합니다"하고 return;
 		//해당도서가 대여중이 아니면 도서목록에서 해당도서 삭제
